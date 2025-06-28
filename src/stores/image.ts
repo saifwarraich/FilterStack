@@ -14,5 +14,8 @@ export const useImageStore = defineStore("image", {
     upload(file: File) {
       this.file = file;
     },
+    selectFilter(filter: string) {
+      this.filter = this.filter === filter ? "" : filter;
+    },
   },
 });
