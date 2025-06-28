@@ -10,4 +10,9 @@ export const useImageStore = defineStore("image", {
     file: null,
     filter: "",
   }),
+  actions: {
+    upload(file: File) {
+      this.file = file;
+    },
+  },
 });
