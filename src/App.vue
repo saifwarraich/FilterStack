@@ -7,7 +7,13 @@
       <p class="text-slate-400 text-sm">Transform your images with custom filters</p>
     </div>
 
-    <ImageUpload />
-    <ImageEditor />
+    <ImageUpload v-if="!store.file" />
+    <ImageEditor v-if="store.file" />
   </div>
 </template>
+
+<script setup lang="ts">
+import { useImageStore } from "@/stores/image";
+
+const store = useImageStore();
+</script>
