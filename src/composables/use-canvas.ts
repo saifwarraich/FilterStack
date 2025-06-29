@@ -6,6 +6,7 @@ export default function useCanvas() {
   let canvasCtx: CanvasRenderingContext2D | null = null;
   const imageElem = new Image();
   let photonInitialized = false;
+  const canvasImageURL = ref("");
 
   async function initPhoton() {
     if (!photonInitialized) {
@@ -40,6 +41,7 @@ export default function useCanvas() {
     canvasRef.value.width = imgDim.width;
     canvasRef.value.height = imgDim.height;
     canvasCtx.drawImage(imageElem, 0, 0, imgDim.width, imgDim.height);
+    canvasImageURL.value = canvasRef.value.toDataURL();
   }
 
   async function filterImage(filterName: string) {
@@ -50,7 +52,8 @@ export default function useCanvas() {
     const photonImage = open_image(canvasRef.value, canvasCtx);
     filter(photonImage, filterName);
     putImageData(canvasRef.value, canvasCtx, photonImage);
+    canvasImageURL.value = canvasRef.value.toDataURL();
   }
 
-  return { canvasRef, loadImage, drawImage, filterImage };
+  return { canvasRef, loadImage, drawImage, filterImage, canvasImageURL };
 }
