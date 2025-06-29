@@ -5,6 +5,7 @@
         width="448"
         height="448"
         class="w-full h-auto rounded border border-slate-700 bg-slate-800"
+        ref="canvasRef"
       ></canvas>
     </div>
   </div>
@@ -45,13 +46,15 @@
 <script setup lang="ts">
 import { useImageStore } from "@/stores/image";
 import useReader from "@/composables/use-reader";
+import useCanvas from "@/composables/use-canvas";
 
 const store = useImageStore();
+const { canvasRef, loadImage } = useCanvas();
 const filters = ["oceanic", "vintage", "rosetint"];
 const { reader } = useReader(store.file, () => {
   if (!reader.result) return;
 
-  const dataUrl = reader.result.toString();
-  console.log(dataUrl);
+  const dataURL = reader.result.toString();
+  loadImage(dataURL);
 });
 </script>
