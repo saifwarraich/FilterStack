@@ -49,12 +49,17 @@ import useReader from "@/composables/use-reader";
 import useCanvas from "@/composables/use-canvas";
 
 const store = useImageStore();
-const { canvasRef, loadImage } = useCanvas();
+const { canvasRef, loadImage, drawImage, filterImage } = useCanvas();
 const filters = ["oceanic", "vintage", "rosetint"];
 const { reader } = useReader(store.file, () => {
   if (!reader.result) return;
 
   const dataURL = reader.result.toString();
   loadImage(dataURL);
+});
+
+store.$subscribe((_, state) => {
+  drawImage();
+  filterImage(state.filter);
 });
 </script>

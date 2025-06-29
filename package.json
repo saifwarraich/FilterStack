@@ -13,7 +13,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@silvia-odwyer/photon": "^0.3.3",
     "pinia": "^3.0.3",
+    "vite-plugin-wasm": "^3.4.1",
     "vue": "^3.5.17"
   },
   "devDependencies": {

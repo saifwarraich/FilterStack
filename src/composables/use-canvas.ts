@@ -1,9 +1,18 @@
 import { ref } from "vue";
+import init, { open_image, filter, putImageData } from "@silvia-odwyer/photon";
 
 export default function useCanvas() {
   const canvasRef = ref<HTMLCanvasElement | null>(null);
   let canvasCtx: CanvasRenderingContext2D | null = null;
   const imageElem = new Image();
+  let photonInitialized = false;
+
+  async function initPhoton() {
+    if (!photonInitialized) {
+      await init();
+      photonInitialized = true;
+    }
+  }
 
   function calculateAspectRatio(
     srcWidth: number,
@@ -33,5 +42,15 @@ export default function useCanvas() {
     canvasCtx.drawImage(imageElem, 0, 0, imgDim.width, imgDim.height);
   }
 
-  return { canvasRef, loadImage };
+  async function filterImage(filterName: string) {
+    if (!canvasCtx || !canvasRef.value || !filterName.trim()) return;
+
+    await initPhoton();
+
+    const photonImage = open_image(canvasRef.value, canvasCtx);
+    filter(photonImage, filterName);
+    putImageData(canvasRef.value, canvasCtx, photonImage);
+  }
+
+  return { canvasRef, loadImage, drawImage, filterImage };
 }
