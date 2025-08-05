@@ -8,7 +8,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FilterGroupsPanel: typeof import('./src/components/FilterGroupsPanel.vue')['default']
     ImageEditor: typeof import('./src/components/ImageEditor.vue')['default']
     ImageUpload: typeof import('./src/components/ImageUpload.vue')['default']
+    LayersPanel: typeof import('./src/components/LayersPanel.vue')['default']
   }
 }
