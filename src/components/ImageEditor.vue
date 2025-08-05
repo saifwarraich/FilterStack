@@ -1,6 +1,7 @@
 <template>
-  <div class="flex gap-6 min-h-screen">
-    <div class="flex-1 pr-6">
+  <div class="flex gap-6 min-h-screen justify-center">
+    <!-- Canvas Area - Left Side -->
+    <div class="w-full max-w-2xl">
       <div class="bg-slate-900 rounded-lg p-4 border border-slate-800 flex justify-center mb-6">
         <canvas
           width="448"
@@ -11,7 +12,8 @@
         ></canvas>
       </div>
 
-      <div class="flex space-x-3">
+      <!-- Action Buttons -->
+      <div class="flex space-x-3 max-w-md mx-auto">
         <button
           @click="resetToOriginal"
           class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-medium py-3 px-4 rounded-md border border-slate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-slate-950 flex items-center justify-center space-x-2"
@@ -45,17 +47,21 @@
       </div>
     </div>
 
+    <!-- Fixed Right Sidebar - Photoshop Style -->
     <div
       class="w-80 fixed right-0 top-0 bottom-0 bg-slate-950 border-l border-slate-800 flex flex-col"
     >
+      <!-- Sidebar Header -->
       <div class="flex-shrink-0 px-4 py-3 border-b border-slate-800">
         <h2 class="text-white font-semibold text-lg">Tools</h2>
       </div>
 
+      <!-- Filter Groups Panel - Upper Section -->
       <div class="flex-shrink-0 border-b border-slate-800">
         <FilterGroupsPanel />
       </div>
 
+      <!-- Layers Panel - Lower Section -->
       <div class="flex-1 min-h-0">
         <LayersPanel />
       </div>
@@ -81,6 +87,7 @@ const { reader } = useReader(store.file, () => {
   loadImage(dataURL);
 });
 
+// Watch for changes in layers and re-render
 watch(
   () => store.layers,
   (layers) => {
@@ -91,6 +98,7 @@ watch(
   { deep: true },
 );
 
+// Watch for changes in active layer and re-render
 watch(
   () => store.activeLayerId,
   () => {
